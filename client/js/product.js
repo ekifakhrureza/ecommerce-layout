@@ -53,39 +53,40 @@ Vue.component('product-component', {
             </div>
 `,
 
+    props: ['productslist'],
     data: function () {
         return {}
     },
 
     methods: {
         add() {
-            
+
             let formData = new FormData()
             formData.append('product_name', this.product_name)
             formData.append('price', this.price)
             formData.append('link', this.link)
             formData.append('stock', this.stock)
-          
 
-            axios.post('http://localhost:3000/products/add',formData ,{
+
+            axios.post('http://localhost:3000/products/add', formData, {
                 headers: {
                     'Content-type': 'multipart/form-data',
                     token: localStorage.getItem('token')
                 }
             }).then((response) => {
-                this.loading=""
-                window.location.href = 'index.html';
-            }).catch((err=>{
-                console.log('masuk error '+err);
                 
+                this.productslist.push(response.data.data)
+                alert('Data Entered successfully');
+                
+            }).catch((err => {
+                console.log('masuk error ' + err);
             }))
         },
         handleUploadPicture: function (event) {
-            console.log('event===', event.target.files)
             this.link = event.target.files[0]
         },
 
-        
+
     }
 
 })

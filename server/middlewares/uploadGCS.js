@@ -17,7 +17,6 @@ function getPublicUrl (filename) {
 }
 
 function sendFileGCS (req, res, next) {
-  console.log('===masuk sendfilegcs', req.files.link[0])
   if(!req.files) {
     return next('upload file could be failed!')
   }
@@ -32,16 +31,13 @@ function sendFileGCS (req, res, next) {
         contentType: req.files.link[0].mimetype
       }
     })
-    console.log('ini streaaaaam '+file);
     
     stream.on('error', (error) => {
-      console.log('masuk stream erorr')
       req.files.link[0].cloudStorageError = error
       reject(error)
     })
   
     stream.on('finish', () => {
-      console.log('masuk stream finish')
       req.files.link[0].cloudStorageObject = gcsname
       file.makePublic().then(()=>{
         req.files.link[0].cloudStoragePublicUrl = getPublicUrl(gcsname)
@@ -53,7 +49,6 @@ function sendFileGCS (req, res, next) {
   })
 
   Promise.all([promisePicture]).then(allready=>{
-    console.log('masuk promise all======')
     next()
     })
     .catch(err=>{

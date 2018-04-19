@@ -45,7 +45,6 @@ module.exports = {
   },
 
   login: function (req, res) {
-    console.log('masuk server');
 
     User.findOne({
       email: req.body.email
