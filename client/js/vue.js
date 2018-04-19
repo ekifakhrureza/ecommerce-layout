@@ -121,15 +121,17 @@ new Vue({
         },
 
         remove(id) {
-            console.log(id);
-
             let confirmation = confirm(`Are you sure delete this product?`)
             if (confirmation) {
                 instance.delete(`/products/delete/${id}`, {
 
                 })
                     .then((response) => {
-                        window.location.href = 'index.html';
+                        let productlist = this.products.filter(list=>
+                            list._id !=`${id}`      
+                        )
+                        this.products = productlist
+       
                     })
             }
         },
