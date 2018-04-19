@@ -40,7 +40,6 @@ new Vue({
                 obj.name = product.name
                 obj.price = product.price
                 obj.qty = 1
-                console.log(obj);
 
                 this.carts.push(obj)
             }
@@ -97,7 +96,7 @@ new Vue({
         logout() {
             localStorage.removeItem('id');
             localStorage.removeItem('token');
-            localStorage.removeItem('username')
+            localStorage.removeItem('name')
             window.location.href = 'index.html'
             this.checkToken = null
 
@@ -110,12 +109,9 @@ new Vue({
                 price: 10
             })
                 .then((data) => {
-                    console.log('aaaaaa');
-
-
+   
                 })
                 .catch(err => {
-                    // console.log(err)
                     console.log('assssdddda');
                 })
         },
@@ -146,21 +142,22 @@ new Vue({
 
             })
                 .then((data) => {
+                    
                     if (data.status === 202) {
-                        console.log('masuk error');
+
                         alert('Email Already Exist')
                     }
                     else {
-                        console.log('masuk gak yaaa?');
+                        console.log(data.data.token)
+                        
                         localStorage.setItem('name', data.data.name)
                         localStorage.setItem('token', data.data.token)
                         localStorage.setItem('username', data.data.email)
-                        window.location.href = 'index.html';
+                        window.location.href = 'index.html'
                     }
 
                 })
                 .catch(err => {
-                    console.log(err);
 
                 })
         },
@@ -170,7 +167,6 @@ new Vue({
 
             let email = this.email;
             let password = this.password;
-            console.log(email);
 
             axios.post('http://localhost:3000/users/login', {
                 email: email,

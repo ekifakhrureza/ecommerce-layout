@@ -12,16 +12,12 @@ module.exports = {
           message: 'Email Already Exist'
         })
       }
-      else {
-        res.status(200).json({
-          message: 'Email not found'
-        })
-      }
+      
     }).catch(err => {
       console.log(err);
 
     })
-
+    
     let newUser = new User({
       email: req.body.email,
       name: req.body.name,
@@ -29,10 +25,20 @@ module.exports = {
     })
     newUser.save()
       .then(response => {
-
+ 
+        let payload = {
+          id: response._id,
+          email: response.email,
+          name: response.name,
+        }
+        let token = jwt.sign(payload, process.env.SECRETKEY)
+        console.log(token+' ini tokeen');
         res.status(200).json({
           message: 'register success',
-          data: response
+          id: response._id,
+          email: response.email,
+          name: response.name,
+          token: token,
         })
       }).catch(err => {
         console.log('error kali');
@@ -54,7 +60,6 @@ module.exports = {
       if (data) {
         var result = bcrypt.compareSync(req.body.password, data.password);
         if (result) {
-          console.log(result);
           
           let payload = {
             id: data.id,
