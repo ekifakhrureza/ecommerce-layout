@@ -1,4 +1,4 @@
-
+Vue.use(VeeValidate);
 $(document).on('click.bs.dropdown.data-api', '.dropdown-menu', function (e) {
     e.stopPropagation();
 });
@@ -11,18 +11,27 @@ new Vue({
     el: '#app',
     data: {
         carts: [],
-        products: [],
         totalQty: 0,
-        errormessage :'',
-        checkToken: localStorage.getItem('token')
+        errormessage: '',
+        checkToken: localStorage.getItem('token'),
+        email: '',
+        name: '',
+        password: '',
+        product_name: '',
+        price: '',
+        link: '',
+        stock: '',
+        products: [],
+        checkTokenName: localStorage.getItem('name'),
+        checkTokenUser: localStorage.getItem('username'),
     },
     methods: {
         addChart(product) {
-            
+
             var counter = 0
             this.carts.forEach(element => {
-                
-                
+
+
                 if (element.id === product._id) {
                     counter++
                     element.qty = element.qty + 1
@@ -37,7 +46,7 @@ new Vue({
                 obj.price = product.price
                 obj.qty = 1
                 console.log(obj);
-                
+
                 this.carts.push(obj)
             }
 
@@ -89,131 +98,127 @@ new Vue({
 
             });
         },
-        login() {
-            let email = document.querySelector('input#email').value;
-            let password = document.querySelector('input#password').value;
-            axios.post('http://localhost:3000/users/login', {
-                email: email,
-                password: password
-            })
-                .then((data) => {
-                     if(data.status===202){
-                       alert('Wrong username/password') 
-                    }
-                    else{
-                        localStorage.setItem('id', data.data.id)
-                        localStorage.setItem('token', data.data.token)
-                        window.location.href = 'index.html';
-                    }
-                   
-                   
-                })
-                .catch(err => {
-                //    alert('Connection problem')
-                   
-                })
-        },
-        logout(){
+
+        logout() {
             localStorage.removeItem('id');
             localStorage.removeItem('token');
+            localStorage.removeItem('username')
             window.location.href = 'index.html'
             this.checkToken = null
 
         },
 
-        buyproduct(){
-            console.log('kenapaaa gaaaa');
+        buyproduct() {
+
             axios.post('http://localhost:3000/products/add', {
                 name: 'a',
                 price: 10
             })
                 .then((data) => {
-                  console.log('aaaaaa');
-                  
+                    console.log('aaaaaa');
+
 
                 })
                 .catch(err => {
                     // console.log(err)
                     console.log('assssdddda');
                 })
-            // this.carts.forEach(element => {
-            //     console.log('masuuuikk'+element.id);
-            //     console.log('masuuuikk'+element.qty);
-              
-            // })
         },
-        register : function(){
-            
-            let email = document.querySelector('input#emailReg').value;
-            let name = document.querySelector('input#nameReg').value;
-            let password = document.querySelector('input#passwordReg').value;
+
+        remove(id) {
+            console.log(id);
+
+            let confirmation = confirm(`Are you sure delete this product?`)
+            if (confirmation) {
+                instance.delete(`/products/delete/${id}`, {
+
+                })
+                    .then((response) => {
+                        window.location.href = 'index.html';
+                    })
+            }
+        },
+        register() {
+            let email = this.email
+            let name = this.name
+            let password = this.password
             axios.post('http://localhost:3000/users/register', {
                 email: email,
-                name : name,
+                name: name,
                 password: password
-    
+
             })
                 .then((data) => {
-                     if(data.status===202){
-                       alert('Wrong username/password') 
+                    if (data.status === 202) {
+                        console.log('masuk error');
+                        alert('Email Already Exist')
                     }
-                    else{
-                        localStorage.setItem('id', data.data.id)
+                    else {
+                        console.log('masuk gak yaaa?');
+                        localStorage.setItem('name', data.data.name)
                         localStorage.setItem('token', data.data.token)
+                        localStorage.setItem('username', data.data.email)
                         window.location.href = 'index.html';
-
                     }
-                   
-                   
+
                 })
                 .catch(err => {
-                   console.log(err);
-                   alert(err.response.data.err.message)
-                   
+                    console.log(err);
+
                 })
-        }
+        },
+
+        login() {
+
+
+            let email = this.email;
+            let password = this.password;
+            console.log(email);
+
+            axios.post('http://localhost:3000/users/login', {
+                email: email,
+                password: password
+            })
+                .then((data) => {
+
+                    if (data.status === 202) {
+                        alert('Wrong email/password')
+                    }
+                    else {
+                        localStorage.setItem('name', data.data.name)
+                        localStorage.setItem('token', data.data.token)
+                        localStorage.setItem('username', data.data.email)
+                        window.location.href = 'index.html';
+                    }
+
+
+                })
+                .catch(err => {
+                    alert('Connection problem')
+                    console.log(err);
+                })
+        },
+        
 
     },
-    
-    created: function () {
-        axios.get('http://localhost:3000/products', {
-        }).then(response => {
-            response.data.data.forEach(productList => {
-                this.products.push(productList)
 
-            }).catch(err=>{
+    created() {
+
+        this.token = localStorage.getItem('token');
+        axios.get('http://localhost:3000/products', {
+            headers: { token: this.token }
+        })
+            .then((response) => {
+                response.data.data.forEach(element => {
+                    this.products.push(element)
+                })
+            })
+            .catch(err => {
                 console.log(err);
-                
+
             })
 
-        })
     }
 
-    
-});
 
-// {
-//     id: 0,
-//     name: 'Manchester United Home Jersey 17/18',
-//     price: 800000,
-//     link: 'https://www.imagehandler.net/?iset=0108&img=A1003394000&fmt=png&w=150&h=150&iindex=0007&c=999&cmp=85',
-//     stock : 10
-// }, {
-//     id: 1,
-//     name: 'Everton Third Jersey 17/18',
-//     price: 600000,
-//     link: 'https://www.imagehandler.net/?iset=0108&img=A1005607000&fmt=png&w=150&h=150&iindex=0007&c=999&cmp=85',
-//     stock : 5
-// }, {
-//     id: 2,
-//     name: 'Leicester City Home Jersey 17/18',
-//     price: 650000,
-//     link: 'https://www.imagehandler.net/?iset=0108&img=A1008982000&fmt=png&w=150&h=150&iindex=0007&c=999&cmp=85',
-//     stock : 3
-// }, {
-//     id: 3,
-//     price: 700000,
-//     name: 'Tottenham Hotspur Home Jersey 17/18',
-//     link: 'https://www.imagehandler.net/?iset=0108&img=A1002810000&fmt=png&w=150&h=150&iindex=0007&c=999&cmp=85',
-//     stock : 4
-// }
+});

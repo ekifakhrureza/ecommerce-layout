@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tribal-ethos-200813",
+  "private_key_id": "5de84fe1ee47fa131294b5e23b0ab1915fd9bafd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC8I9uTUwNoUA0q\nmkO118rKv9wKuDdDzaGqjY+oxedOqpoP12/VeDu4OElvivzTc8bbIa2nz1QJkO1I\nUUp9cMPXcjiYTNer8qLfxQqnjndkWFkLeWt7IAyMhlAXi+ywthCSqgwk5nEwvbHY\nKrft2uuJmyw8Ak3coyxUucAeN0LAZ0i0U+hU6/BTiKaSgbiIe3G+Lsiw/hftwX3n\nRulO9QZ2rbdo6CyPmwDIPQ+jN0GlDCOMpfL7Pff/RbxqjvFwugWcEzR9W5wdhwIm\nF3bQ6CaV51QOnuRcaJqpEfaY9T5DjZAOx7r9sTOSpo1IVu7bdpjkx6nqa8YmVBzQ\ntIj4unp9AgMBAAECggEAFDKWna/5cKxkuCB23mxmipz4RspUsdm/M6vI3Wne6tS+\nf1mLLv6eYqjgRrJEHCs/ZkJXqJPwcKp3XskjVxN7uC28olUK3kcecdQZ0GJ8shrD\nTHZiMdtUnY1vHGgFe/RqaQ8KXg0YimQDALLtVgKnlflA/Bw/Nvg+3Rr9OKveuwBB\nXETeRZppKNZiR6SBwxtdUAwu/eOu217hE1HcQ0lwoeApbSUmoLnTP94so3OvXHP6\nrlaCpAnJ5XR1iA+DcJCYjECmBoRtX1iTcZ3ih22OFmWzloagzQZv8L1OR3iAperx\nEl3no+JVKTlr/611rXR59FLvJsWRTRU6qyLbmldY/QKBgQD6fHQVaCjypBLn54vT\nVS2wqIEmReFPczG8re4PhTPuNdarAK0gzvHEvczYLESUIEmtsDgFizVuZJprsv1p\nlmgHItePEqLT7EuCNYeGg/Q0C1N8zx/qlieff2LWHJxM/T7bQQerz+8o+RHPdTTd\n9nF8dZzK6JgcsLN3+mTMUBKh0wKBgQDASBHlS3Y5ncTIepx66BbVGzP4YkIZpFSG\nvpIgGtVKu8WMRMUHroxxI6BWQsVPrIqaW1lbp7yjfXNOOVHGuZuioOxKTNtN4gKA\nrCs3gkFh5X1XuAXe/qrzW491T0kDYSzeHWmIdgikCze382pBTaLnA8KMFPngc5Ut\n4L9LPH5wbwKBgBV0BUk0E5W8gbYE+c/O0sv3kqAhiguQ9SiQyPvhT7JOQCWDOFDA\nCKruCpZVLEZ3gXfzyMiIxLnAug0RVmztqdk6nbWuRe3aphjv1rypnoe6lJry7mvc\nEmaxtVhbOPPLGNAUgMCxXW1n76OSCUYdbljXhedHBogmhih3dJyfGwlrAoGAQqu6\nqMrVn3y48tqwz10SLapVBtbrHIECXgZOHJuxQUyCXvSpbNR1FfXIbqCQUeP92y+5\neDJdEkM5a/IsDL/m2yj5RXoIwKSRQZRxF7oueYddQsEoJ/4dwGwK/h4TrvxO1mVU\nZmCm9lp9Y2cffK0ywu9m0bOkQNNS8qlvKuM65DkCgYB6BmvHNGyNE0Cubs+ZeNDl\nWy0ssS+SJFiTimFxPjEzqFCk9+ksPGu9Ciz+XUuSslS4dnxF7yHw9hixo/Cy4u3w\niPCaj77pB56l+JOgtrOlpPCklFQSw6+HMGYAjg84R2mOHBXh07l72sByKycbzhAp\nfRrqWELvOSHLwNTe/R4tBg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "admin-ecommerce@tribal-ethos-200813.iam.gserviceaccount.com",
+  "client_id": "113200875113022170832",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/admin-ecommerce%40tribal-ethos-200813.iam.gserviceaccount.com"
+}

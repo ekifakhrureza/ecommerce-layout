@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
-// const validate = require('mongoose-validator');
+const validate = require('mongoose-validator');
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
     email : {
         type : String,
-        unique : [true,'email already taken'],
+        unique : true,
         lowercase : true,
         trim : true,
         required : [true,'email cannot be empty'],
@@ -16,19 +16,15 @@ const userSchema = new Schema({
         type : String,
         trim : true,
         minlength : [6,'Password must be at least 6 characters'],
-        required : [true,'Password cannot be empty'],
-        validate : [/\d/,'Password should contain number']
+        required : [true,'Password cannot be empty']
         
     },
     name : {
         type : String,
         trim : true ,
         required : [true,'name cannot be empty']
-    },
-    isAdmin: { type: Boolean, default: false },
-},
-
-{
+    }
+},{
     timestamps: true
 })
 

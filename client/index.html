@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Football In Style</title>
+    <title>Jersey Edun</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
@@ -86,33 +86,28 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Jersey</a>
+                            <a class="nav-link" href="#">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Topwear</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Bottomwear</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Footwear</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Accessories</a>
-                        </li>
+
                         <div v-if="checkToken===null">
-                                <li>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-whatever="@getbootstrap">LOGIN</button>
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#registerModal" data-whatever="@getbootstrap">REGISTER</button>
-                                </li>
-                            </div>
+                            <li>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-whatever="@getbootstrap">LOGIN</button>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#registerModal" data-whatever="@getbootstrap">REGISTER</button>
+                            </li>
+                        </div>
                         <div v-else>
                             <li>
+
                                 <button type="button" class="btn btn-warning" v-on:click="logout">LOGOUT</button>
+
                             </li>
-                            
+
+
                         </div>
-                        
+                        <div v-if="checkToken!==null">
+                            <p style="color: cyan">Welcome, {{checkTokenName}}</p>
+                        </div>
+
                     </ul>
                 </div>
             </div>
@@ -124,17 +119,16 @@
 
                 <div class="col-md-12 title d-flex justify-content-center align-content-center flex-wrap">
 
-                    <h1>Football Apparel</h1>
+                    <h1>Jersey Edun</h1>
+
 
                 </div>
-
-
-
-
             </div>
-
-
+            <button v-if="checkTokenUser==='admin@edun.com'" type="button" class="btn btn-danger" data-toggle="modal" data-target="#addModal"
+                v-on:click="add()">ADD PRODUCT</button>
             <div class="row product">
+
+
 
                 <div v-for="product in products" class="col-6 col-md-3 d-flex justify-content-center align-content-center flex-wrap img-prd">
                     <img :src="product.link">
@@ -145,15 +139,26 @@
                     <div class="col-md-12 nopadding d-flex justify-content-center align-content-center flex-wrap price-prd">
                         <price>IDR {{product.price}}
                         </price>
+
                     </div>
+
                     <div col-md-12 nopadding d-flex justify-content-center align-content-center flex-wrap button-prd>
-                        <button type="button" class="btn btn-outline-success" v-on:click="addChart(product)">Add To Chart</button>
-                        <button type="button" class="btn btn-outline-primary">Detail</button>
+                        <price>
+                            <br> Sisa : {{product.stock}} PCS</price>
+                        <button type="button" class="btn btn-outline-success" @click="addChart(product)">Add To Chart</button>
+
+                        <a v-if="checkTokenUser==='admin@edun.com'" @click="remove(product._id)">
+
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+
                     </div>
 
                 </div>
 
             </div>
+
+
         </div>
 
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -166,20 +171,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Email:</label>
-                                <input type="text" class="form-control" id="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="col-form-label">Password:</label>
-                                <input type="password" class="form-control" id="password" required>
-                            </div>
-                        </form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Email:</label>
+                            <input v-model="email" name="email" type="text" class="form-control" id="email" v-validate="'required|email|max:50'" v-bind:class="{'form-control': true, 'error': errors.has('email') }">
+                        </div>
+                        <div class="control">
+                            <span v-show="errors.has('email')" class="text-danger">{{ errors.first('email') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Password:</label>
+                            <input v-model="password" name="password" type="password" class="form-control" id="password">
+                        </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" v-on:click="login">Submit</button>
+                        <button type="button" class="btn btn-primary" @click="login()">Submit</button>
                     </div>
                 </div>
             </div>
@@ -195,36 +203,55 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label" required>Email:</label>
-                                <input type="text" class="form-control" id="emailReg">
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label" required>Name:</label>
-                                <input type="text" class="form-control" id="nameReg">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="col-form-label" required>Password:</label>
-                                <input type="password" class="form-control" id="passwordReg">
-                            </div>
-                        </form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label" required>Email:</label>
+                            <input v-model="email" name="email" type="text" class="form-control" id="emailReg" v-validate="'required|email|max:50'" v-bind:class="{'form-control': true, 'error': errors.has('email') }">
+                        </div>
+                        <div class="control">
+                            <span v-show="errors.has('email')" class="text-danger">{{ errors.first('email') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Name:</label>
+                            <input v-model="name" name="nameReg" type="text" class="form-control" id="nameReg" v-validate="'required|max:50'" v-bind:class="{'form-control': true, 'error': errors.has('nameReg') }">
+                        </div>
+                        <div class="control">
+                            <span v-show="errors.has('nameReg')" class="text-danger">{{ errors.first('nameReg') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Password:</label>
+                            <input v-model="password" name="password" type="password" class="form-control" id="passwordReg" v-validate="'required|min:6|max:15'"
+                                v-bind:class="{'form-control': true, 'error': errors.has('password') }">
+                        </div>
+                        <div class="control">
+                            <span v-show="errors.has('password')" class="text-danger">{{ errors.first('password') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Confirm Password:</label>
+                            <input v-model="conpassword" name="conpassword" type="password" class="form-control" v-validate="'required|confirmed:password'"
+                                v-bind:class="{'form-control': true, 'error': errors.has('confirmation_password') }" id="conpassword">
+                        </div>
+                        <div class="control">
+                            <span v-show="errors.has('conpassword')" class="text-danger">{{ errors.first('conpassword') }}</span>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" v-on:click="register()">Submit</button>
+                        <button type="button" class="btn btn-primary" @click="register()">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <product-component></product-component>
+
     </div>
 
 
 
-
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
     <script src="./js/vue.js"></script>
+    <script src="./js/product.js"></script>
 </body>
 
 </html>

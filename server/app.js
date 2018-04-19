@@ -4,7 +4,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose =require ('mongoose')
-mongoose.connect('mongodb://localhost/db_e_commerce');
+let dbuser = process.env.dbuser
+let dbpass = process.env.dbpass
+
+mongoose.connect(`mongodb://ekidb:admin123@ds147659.mlab.com:47659/db_e_commerce`, ()=>{
+console.log('db connect');
+
+})
 require('dotenv').config()
 const cors = require('cors')
 const indexRouter = require('./routes/index');
