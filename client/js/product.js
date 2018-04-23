@@ -5,7 +5,7 @@ Vue.component('product-component', {
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -13,7 +13,7 @@ Vue.component('product-component', {
                         <div class="modal-body">
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label" required>Name:</label>
-                                    <input v-model="product_name" name="product_name" type="text" class="form-control" 
+                                    <input v-model="product_name" name="product_name" type="text" class="form-control" placeholder="Input Name" 
                                     id="product_name" v-validate="'required'"
                                     v-bind:class="{'form-control': true, 'error': errors.has('product_name') }">
                                 </div>
@@ -22,7 +22,7 @@ Vue.component('product-component', {
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label" required>Price:</label>
-                                    <input v-model="price" name="price" type="text" class="form-control" id="price"
+                                    <input v-model="price" name="price" type="text" class="form-control" id="price" placeholder="Input Number Only. e.g. 50000" 
                                     v-validate="'required'"
                                     v-bind:class="{'form-control': true, 'error': errors.has('price') }">
                                 </div>
@@ -31,7 +31,7 @@ Vue.component('product-component', {
                                 </div>
                                 <div class="form-group">
                                     <label for="message-text" class="col-form-label" required>Stock:</label>
-                                    <input v-model="stock" name="stock" type="text" class="form-control" id="stock"
+                                    <input v-model="stock" name="stock" type="text" class="form-control" id="stock" placeholder="Input Number Only. e.g. 7"
                                     v-validate="'required'"
                                     v-bind:class="{'form-control': true, 'error': errors.has('stock') }">
                                 </div>
@@ -57,16 +57,13 @@ Vue.component('product-component', {
     data: function () {
         return {}
     },
-
     methods: {
         add() {
-
             let formData = new FormData()
             formData.append('product_name', this.product_name)
             formData.append('price', this.price)
             formData.append('link', this.link)
             formData.append('stock', this.stock)
-
 
             axios.post('http://localhost:3000/products/add', formData, {
                 headers: {
@@ -76,8 +73,8 @@ Vue.component('product-component', {
             }).then((response) => {
                 
                 this.productslist.push(response.data.data)
-                alert('Data Entered successfully');
-                
+                document.getElementById('close').click()
+                alert('Data Entered successfully')
             }).catch((err => {
                 console.log('masuk error ' + err);
             }))
